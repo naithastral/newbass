@@ -1,22 +1,30 @@
 <script>
-var link = document.location +"";
-var data = link.split("?");
-var link= data[[data.length - 1]];
-var s=link.split("-");
-var newLink="";
-for(i=0;i<s.length;i++){
-	s[i]=s[i].replace(/^c.*/g, '&utm_campaign=c');
-	s[i]=s[i].replace(/^o.*/g, '&utm_campaign=o');
-	s[i]=s[i].replace(/^l.*/g, '&utm_campaign=l');
-	s[i]=s[i].replace(/^u.*/g, '&utm_campaign=u');
-	s[i]=s[i].replace(/^s.*_/g, '&utm_source=');
-	s[i]=s[i].replace(/^e.*_/g, '&em=');
-	newLink=newLink+s[i];
-}
-
-if(newLink!=null && newLink.length>10){
-	window.location.replace("http://psd.ajarroue.me.uk/?" + newLink);
-}else{
-	window.location.replace("http://psd.ajarroue.me.uk/404");
-}
+	var search =window.location.search;
+	var hash =window.location.hash;
+	if (hash==null || hash.length<10){
+		if(search==null || search.length<10){
+			rdt=false;
+		}else{
+			rdt=search;
+			if (rdt.indexOf('-') > -1){
+				var a=search.split("-");
+				if(a[0]=="?c"){
+					rdt="?itm_cadaz=c&";
+				}else if(a[0]=="?u"){
+					rdt="?itm_cadaz=u&";
+				}
+				var s=a[1].split("_");
+				rdt+="subid="+s[0]+"&";;
+				rdt+="icy="+s[1];
+			}
+		}
+	}else{
+		rdt=hash.replace("#","?");
+	}
+	if(rdt==false){
+		var d="404";
+	}else{
+		var d="http://pac.consultingskills.org/"+rdt;
+	}
+	window.location.replace(d);
 </script>
